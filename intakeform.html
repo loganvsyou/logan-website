@@ -101,6 +101,11 @@ textarea{resize:vertical; min-height:90px}
 .sw-teal span::before{background:#0f7d8e}
 .sw-steel span::before{background:#5b7186}
 .sw-unsure span::before{background:linear-gradient(135deg,#1e3a5f,#5aa9e6)}
+.sw-black span::before{background:#111827}
+.sw-white span::before{background:#fff}
+.sw-gray span::before{background:#6b7280}
+.sw-blue span::before{background:#2563eb}
+.sw-brown span::before{background:#8b5e3c}
 .sw-emerald span::before{background:#10b981}
 .sw-forest span::before{background:#15803d}
 .sw-lime span::before{background:#84cc16}
@@ -177,6 +182,20 @@ body::before{background-image:
   .reveal{opacity:1 !important; transform:none !important}
   .scroll-progress{display:none}
 }
+
+/* ===== Responsive / mobile polish (added) ===== */
+html, body{overflow-x:clip}
+html{-webkit-text-size-adjust:100%}
+.btn{min-height:48px}
+@media (max-width:600px){
+  .wrap{padding:0 18px}
+  .top{padding:28px 0 4px}
+  .card{padding:22px}
+  .card-head{gap:10px}
+  .check-grid, .choices{grid-template-columns:1fr}
+  /* iOS: 16px inputs prevent auto-zoom on focus */
+  input[type=text], input[type=email], input[type=tel], input[type=url], select, textarea{font-size:16px}
+}
 </style>
 </head>
 <body>
@@ -194,6 +213,7 @@ body::before{background-image:
   <form id="intakeForm" action="https://formspree.io/f/mredrowp" method="POST">
     <input type="hidden" name="_subject" value="New Website Intake — Local Growth Systems" />
     <input type="hidden" name="form_type" value="Client Intake Form" />
+    <input type="hidden" name="recipient_note" value="Send this client intake submission to logan@localgrowthsystemsapp.com" />
 
     <!-- 1. Business basics -->
     <div class="card reveal">
@@ -208,7 +228,7 @@ body::before{background-image:
         </div>
         <div class="field">
           <label for="business">Business name <span class="opt">— exactly as it should appear</span></label>
-          <input type="text" id="business" name="business_name" placeholder="e.g. Estevane HVAC" required />
+          <input type="text" id="business" name="business_name" placeholder="Your business name" required />
         </div>
       </div>
       <div class="row">
@@ -223,11 +243,11 @@ body::before{background-image:
       </div>
       <div class="field">
         <label for="industry">What does your business do?</label>
-        <input type="text" id="industry" name="industry" placeholder="e.g. Residential & commercial HVAC — install, repair, maintenance" />
+        <input type="text" id="industry" name="industry" placeholder="What you do, who you help, and what services you offer" />
       </div>
       <div class="field">
         <label for="tagline">One sentence: what would you tell a stranger about your business? <span class="opt">(optional)</span></label>
-        <input type="text" id="tagline" name="tagline" placeholder="e.g. Family-run HVAC keeping the Treasure Valley comfortable for 12 years." />
+        <input type="text" id="tagline" name="tagline" placeholder="A short sentence that explains your business" />
       </div>
     </div>
 
@@ -240,7 +260,7 @@ body::before{background-image:
       <div class="field">
         <label for="area">Service area</label>
         <p class="hint">Cities, counties, or a radius — wherever you take jobs.</p>
-        <input type="text" id="area" name="service_area" placeholder="e.g. Boise, Meridian, Nampa & surrounding Ada County" />
+        <input type="text" id="area" name="service_area" placeholder="Cities, counties, states, or remote service area" />
       </div>
       <div class="row">
         <div class="field">
@@ -260,7 +280,9 @@ body::before{background-image:
           <label class="check"><input type="radio" name="primary_cta" value="Request a quote" /> Request a quote</label>
           <label class="check"><input type="radio" name="primary_cta" value="Book an appointment" /> Book an appointment</label>
           <label class="check"><input type="radio" name="primary_cta" value="Send a message" /> Send a message</label>
+          <label class="check"><input type="radio" name="primary_cta" value="Other / custom" /> Other / custom</label>
         </div>
+        <input type="text" name="primary_cta_custom" placeholder="If custom, write the exact button text here" style="margin-top:12px" />
       </div>
     </div>
 
@@ -271,49 +293,32 @@ body::before{background-image:
         <div><h2>Look &amp; feel</h2><p class="sub">Pick the colors, fonts, and overall vibe you're drawn to. Nothing's locked in — it just gives us a starting direction.</p></div>
       </div>
       <div class="field">
-        <label>Which colors feel right? <span class="opt">— pick one or two</span></label>
-        <p class="hint">Don't overthink it — we'll fine-tune the exact shades later.</p>
+        <label>What main color should the site use? <span class="opt">— pick one or two</span></label>
+        <p class="hint">Pick a basic color direction. Exact shades can be refined later.</p>
         <div class="swatches">
-          <label class="swatch sw-navy"><input type="checkbox" name="colors" value="Deep navy" /><span>Deep navy</span></label>
-          <label class="swatch sw-royal"><input type="checkbox" name="colors" value="Royal blue" /><span>Royal blue</span></label>
-          <label class="swatch sw-sky"><input type="checkbox" name="colors" value="Sky blue" /><span>Sky blue</span></label>
-          <label class="swatch sw-teal"><input type="checkbox" name="colors" value="Teal" /><span>Teal</span></label>
-          <label class="swatch sw-emerald"><input type="checkbox" name="colors" value="Emerald green" /><span>Emerald</span></label>
-          <label class="swatch sw-forest"><input type="checkbox" name="colors" value="Forest green" /><span>Forest</span></label>
-          <label class="swatch sw-lime"><input type="checkbox" name="colors" value="Lime / chartreuse" /><span>Lime</span></label>
-          <label class="swatch sw-gold"><input type="checkbox" name="colors" value="Gold / amber" /><span>Gold</span></label>
-          <label class="swatch sw-orange"><input type="checkbox" name="colors" value="Orange" /><span>Orange</span></label>
+          <label class="swatch sw-black"><input type="checkbox" name="colors" value="Black" /><span>Black</span></label>
+          <label class="swatch sw-white"><input type="checkbox" name="colors" value="White" /><span>White</span></label>
+          <label class="swatch sw-gray"><input type="checkbox" name="colors" value="Gray" /><span>Gray</span></label>
           <label class="swatch sw-red"><input type="checkbox" name="colors" value="Red" /><span>Red</span></label>
-          <label class="swatch sw-pink"><input type="checkbox" name="colors" value="Pink / magenta" /><span>Pink</span></label>
+          <label class="swatch sw-orange"><input type="checkbox" name="colors" value="Orange" /><span>Orange</span></label>
+          <label class="swatch sw-gold"><input type="checkbox" name="colors" value="Yellow / gold" /><span>Yellow</span></label>
+          <label class="swatch sw-forest"><input type="checkbox" name="colors" value="Green" /><span>Green</span></label>
+          <label class="swatch sw-blue"><input type="checkbox" name="colors" value="Blue" /><span>Blue</span></label>
           <label class="swatch sw-purple"><input type="checkbox" name="colors" value="Purple" /><span>Purple</span></label>
-          <label class="swatch sw-slate"><input type="checkbox" name="colors" value="Slate gray" /><span>Slate</span></label>
-          <label class="swatch sw-charcoal"><input type="checkbox" name="colors" value="Charcoal / black" /><span>Charcoal</span></label>
+          <label class="swatch sw-pink"><input type="checkbox" name="colors" value="Pink" /><span>Pink</span></label>
+          <label class="swatch sw-brown"><input type="checkbox" name="colors" value="Brown" /><span>Brown</span></label>
           <label class="swatch sw-unsure"><input type="checkbox" name="colors" value="Not sure — pick for me" /><span>Not sure</span></label>
         </div>
-        <input type="text" name="color_notes" placeholder="Any color notes? A logo color to match, a brand color you love, a site you like…" />
+        <input type="text" name="color_notes" placeholder="Any brand colors, colors to avoid, or logo colors to match?" />
       </div>
       <div class="field">
-        <label>Overall theme / mood</label>
-        <p class="hint">What overall vibe should the site give off?</p>
-        <div class="choices">
-          <label class="choice"><input type="radio" name="theme" value="Light & clean" />
-            <div class="box"><div class="name">Light &amp; clean</div><div class="demo demo-light">Aa</div><div class="desc">Bright, airy, lots of space</div></div>
-          </label>
-          <label class="choice"><input type="radio" name="theme" value="Dark & bold" />
-            <div class="box"><div class="name">Dark &amp; bold</div><div class="demo demo-dark">Aa</div><div class="desc">Dramatic, premium, high-contrast</div></div>
-          </label>
-          <label class="choice"><input type="radio" name="theme" value="Minimal" />
-            <div class="box"><div class="name">Minimal</div><div class="demo demo-sans">Aa</div><div class="desc">Stripped back, no clutter</div></div>
-          </label>
-          <label class="choice"><input type="radio" name="theme" value="Bold & colorful" />
-            <div class="box"><div class="name">Bold &amp; colorful</div><div class="demo demo-colorful">Aa</div><div class="desc">Energetic, vivid, stands out</div></div>
-          </label>
-          <label class="choice"><input type="radio" name="theme" value="Elegant / premium" />
-            <div class="box"><div class="name">Elegant</div><div class="demo demo-serif">Aa</div><div class="desc">Refined, high-end, classic</div></div>
-          </label>
-          <label class="choice"><input type="radio" name="theme" value="Playful / friendly" />
-            <div class="box"><div class="name">Playful</div><div class="demo demo-rounded">Aa</div><div class="desc">Warm, approachable, fun</div></div>
-          </label>
+        <label>Overall theme</label>
+        <p class="hint">This controls the general background and mood of the design.</p>
+        <div class="check-grid">
+          <label class="check"><input type="radio" name="theme_style" value="Light theme" /> Light</label>
+          <label class="check"><input type="radio" name="theme_style" value="Dark theme" /> Dark</label>
+          <label class="check"><input type="radio" name="theme_style" value="Gray / neutral theme" /> Gray / neutral</label>
+          <label class="check"><input type="radio" name="theme_style" value="Not sure — choose for me" /> Not sure</label>
         </div>
       </div>
       <div class="field">
@@ -369,11 +374,11 @@ body::before{background-image:
       <div class="field">
         <label for="services">List your main services</label>
         <p class="hint">Just bullet them out — I'll write the polished copy.</p>
-        <textarea id="services" name="services_list" placeholder="e.g.&#10;- AC install & repair&#10;- Furnace service&#10;- Heat pumps&#10;- Maintenance plans&#10;- Emergency service"></textarea>
+        <textarea id="services" name="services_list" placeholder="List your main services here, one per line"></textarea>
       </div>
       <div class="field">
         <label for="differentiator">What makes you different from other local shops?</label>
-        <input type="text" id="differentiator" name="differentiator" placeholder="e.g. Same-day service, licensed & insured, upfront pricing, 12 years local" />
+        <input type="text" id="differentiator" name="differentiator" placeholder="What makes your business different or better?" />
       </div>
     </div>
 
@@ -414,14 +419,14 @@ body::before{background-image:
       <div class="row">
         <div class="field">
           <label for="deadline">Any deadline or event driving this? <span class="opt">(optional)</span></label>
-          <input type="text" id="deadline" name="deadline" placeholder="e.g. before summer AC season" />
+          <input type="text" id="deadline" name="deadline" placeholder="Any date you need the site finished by?" />
         </div>
         <div class="field">
           <label for="package">Package you're after</label>
           <select id="package" name="package">
-            <option value="Website — $150 (one-time)">Website — $150 (one-time)</option>
-            <option value="Website + Care — $150 setup + $99/mo">Website + Care — $150 setup + $99/mo</option>
-            <option value="Website + Lead Growth — $500/mo">Website + Lead Growth — $500/mo</option>
+            <option value="Website Design — one-time">Website Design — one-time</option>
+            <option value="Website + Care">Website + Care</option>
+            <option value="Website Refresh">Website Refresh</option>
             <option value="Not sure yet">Not sure yet</option>
           </select>
         </div>
@@ -439,7 +444,7 @@ body::before{background-image:
   <div class="success" id="success">
     <div class="ico">✓</div>
     <h2>Got it — thank you!</h2>
-    <p>Your details are on their way to Logan. I'll review everything and reach out within one business day to confirm scope and next steps.</p>
+    <p>Your details are on their way to Logan. I'll review everything and reach out within one business day to confirm scope and next steps. If you don't see my reply, please check your spam or junk folder.</p>
     <p style="margin:0; font-size:.9rem">— Logan, Local Growth Systems</p>
   </div>
 </div>
