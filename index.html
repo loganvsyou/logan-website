@@ -579,6 +579,21 @@ body::before{background-image:
   .aurora span{animation:none}
   .aurora{transform:none !important}
 }
+
+/* Reviews / testimonials */
+.reviews-grid{display:grid; grid-template-columns:repeat(2,1fr); gap:20px; margin-top:48px}
+.review-card{background:var(--card); border:1px solid var(--line); border-radius:var(--radius); padding:28px; display:flex; flex-direction:column; gap:16px; transition:transform .25s ease, box-shadow .25s ease, border-color .2s ease}
+.review-card:hover{transform:translateY(-4px); box-shadow:var(--shadow); border-color:var(--accent)}
+.review-card .stars{color:var(--accent-2); letter-spacing:3px; font-size:1.05rem}
+.review-card blockquote{margin:0; font-size:1.05rem; line-height:1.55; color:var(--ink)}
+.review-author{display:flex; align-items:center; gap:14px; margin-top:auto}
+.review-avatar{width:44px; height:44px; border-radius:50%; flex-shrink:0; display:grid; place-items:center; font-family:'Bricolage Grotesque',sans-serif; font-weight:700; font-size:.9rem; color:var(--on-accent); background:linear-gradient(135deg,var(--accent),#1a8585)}
+.review-card:nth-child(2) .review-avatar{background:linear-gradient(135deg,#f0a85a,#d97a3a)}
+.review-card:nth-child(3) .review-avatar{background:linear-gradient(135deg,#9fc2c2,#0f5d5e)}
+.review-card:nth-child(4) .review-avatar{background:linear-gradient(135deg,#d4a89a,#9c5444)}
+.review-meta{display:flex; flex-direction:column; font-size:.9rem; color:var(--ink-2); line-height:1.3}
+.review-meta strong{color:var(--ink); font-weight:600}
+@media (max-width:640px){.reviews-grid{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
@@ -598,6 +613,7 @@ body::before{background-image:
       <a href="#packages">Packages</a>
       <a href="#how">How It Works</a>
       <a href="#who">Who It's For</a>
+      <a href="#reviews">Reviews</a>
       <a href="#faq">FAQ</a>
       <a href="#audit" class="nav-cta">Free Growth Audit</a>
     </div>
@@ -906,6 +922,51 @@ body::before{background-image:
   </div>
 </section>
 
+<!-- REVIEWS — SAMPLE TESTIMONIALS: replace with real, verifiable client reviews before launch -->
+<section class="section" id="reviews">
+  <div class="container">
+    <div style="max-width:680px" class="reveal">
+      <span class="eyebrow">What Clients Say</span>
+      <h2>Results that show up in the call log.</h2>
+      <p>A few words from local business owners we've worked with.</p>
+    </div>
+    <div class="reviews-grid">
+      <figure class="review-card reveal">
+        <div class="stars" aria-label="Rated 5 out of 5">★★★★★</div>
+        <blockquote>"Our old site was basically a digital business card. A month after the new one went live we jumped from a couple of form requests a week to five or six. Logan made the whole thing painless."</blockquote>
+        <figcaption class="review-author">
+          <span class="review-avatar" aria-hidden="true">JM</span>
+          <span class="review-meta"><strong>Jenna Marlowe</strong>Owner · Marlowe Heating &amp; Air</span>
+        </figcaption>
+      </figure>
+      <figure class="review-card reveal">
+        <div class="stars" aria-label="Rated 5 out of 5">★★★★★</div>
+        <blockquote>"The site looks better than companies ten times our size. Customers actually mention it when they call. Worth every penny — and the monthly care means I never have to touch it."</blockquote>
+        <figcaption class="review-author">
+          <span class="review-avatar" aria-hidden="true">DC</span>
+          <span class="review-meta"><strong>Devin Cross</strong>Co-owner · Cross Brothers Roofing</span>
+        </figcaption>
+      </figure>
+      <figure class="review-card reveal">
+        <div class="stars" aria-label="Rated 5 out of 5">★★★★★</div>
+        <blockquote>"I didn't want to babysit a website. The care plan means I never think about it — it just works, and the quote form drops leads straight onto my phone."</blockquote>
+        <figcaption class="review-author">
+          <span class="review-avatar" aria-hidden="true">MD</span>
+          <span class="review-meta"><strong>Maria Delgado</strong>Founder · Polished Commercial Cleaning</span>
+        </figcaption>
+      </figure>
+      <figure class="review-card reveal">
+        <div class="stars" aria-label="Rated 5 out of 5">★★★★★</div>
+        <blockquote>"Clean, modern, and it finally reflects the experience we give in person. Bookings through the site have climbed every month since launch."</blockquote>
+        <figcaption class="review-author">
+          <span class="review-avatar" aria-hidden="true">AW</span>
+          <span class="review-meta"><strong>Dr. Aaron Whitfield</strong>Director · Whitfield Wellness &amp; Med Spa</span>
+        </figcaption>
+      </figure>
+    </div>
+  </div>
+</section>
+
 <!-- FAQ -->
 <section class="section" id="faq">
   <div class="container">
@@ -1023,6 +1084,7 @@ body::before{background-image:
       <a href="#services">Services</a>
       <a href="#packages">Packages</a>
       <a href="#how">How It Works</a>
+      <a href="#reviews">Reviews</a>
       <a href="#faq">FAQ</a>
       <a href="#audit">Free Audit</a>
       <a href="intakeform.html">Client Intake</a>
