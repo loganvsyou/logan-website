@@ -101,6 +101,16 @@ textarea{resize:vertical; min-height:90px}
 .sw-teal span::before{background:#0f7d8e}
 .sw-steel span::before{background:#5b7186}
 .sw-unsure span::before{background:linear-gradient(135deg,#1e3a5f,#5aa9e6)}
+.sw-emerald span::before{background:#10b981}
+.sw-forest span::before{background:#15803d}
+.sw-lime span::before{background:#84cc16}
+.sw-gold span::before{background:#d4a017}
+.sw-orange span::before{background:#ea580c}
+.sw-red span::before{background:#dc2626}
+.sw-pink span::before{background:#db2777}
+.sw-purple span::before{background:#7c3aed}
+.sw-slate span::before{background:#64748b}
+.sw-charcoal span::before{background:#1f2937}
 
 /* font choices */
 .choices{display:grid; grid-template-columns:1fr 1fr; gap:12px}
@@ -117,6 +127,11 @@ textarea{resize:vertical; min-height:90px}
 .demo-sans{font-family:'Inter Tight',sans-serif; font-weight:600}
 .demo-classic{font-family:Georgia,serif}
 .demo-modern{font-family:'Inter Tight',sans-serif; font-weight:400; letter-spacing:.01em}
+.demo-light{font-family:'Inter Tight',sans-serif; font-weight:300}
+.demo-bold{font-family:'Bricolage Grotesque','Inter Tight',sans-serif; font-weight:800; letter-spacing:-.01em}
+.demo-rounded{font-family:'Inter Tight',sans-serif; font-weight:700; letter-spacing:.01em}
+.demo-dark{font-family:'Bricolage Grotesque',sans-serif; font-weight:700; text-shadow:0 0 12px rgba(45,212,191,.55)}
+.demo-colorful{font-family:'Bricolage Grotesque',sans-serif; font-weight:800; background:linear-gradient(90deg,#2dd4bf,#f0a85a,#db2777); -webkit-background-clip:text; background-clip:text; color:transparent}
 
 /* checkboxes */
 .check-grid{display:grid; grid-template-columns:1fr 1fr; gap:10px}
@@ -242,7 +257,7 @@ body::before{background-image:
         <p class="hint">The big button you want visitors to click most.</p>
         <div class="check-grid">
           <label class="check"><input type="radio" name="primary_cta" value="Call now" /> Call now</label>
-          <label class="check"><input type="radio" name="primary_cta" value="Request a quote" checked /> Request a quote</label>
+          <label class="check"><input type="radio" name="primary_cta" value="Request a quote" /> Request a quote</label>
           <label class="check"><input type="radio" name="primary_cta" value="Book an appointment" /> Book an appointment</label>
           <label class="check"><input type="radio" name="primary_cta" value="Send a message" /> Send a message</label>
         </div>
@@ -253,36 +268,75 @@ body::before{background-image:
     <div class="card reveal">
       <div class="card-head">
         <span class="card-num">03</span>
-        <div><h2>Look &amp; feel</h2><p class="sub">You mentioned blue and a "pretty font" — let's pin that down.</p></div>
+        <div><h2>Look &amp; feel</h2><p class="sub">Pick the colors, fonts, and overall vibe you're drawn to. Nothing's locked in — it just gives us a starting direction.</p></div>
       </div>
       <div class="field">
-        <label>Which blue feels closest?</label>
-        <p class="hint">Pick the one that feels right — we can fine-tune the exact shade later.</p>
+        <label>Which colors feel right? <span class="opt">— pick one or two</span></label>
+        <p class="hint">Don't overthink it — we'll fine-tune the exact shades later.</p>
         <div class="swatches">
-          <label class="swatch sw-navy"><input type="radio" name="color" value="Deep navy" /><span>Deep navy</span></label>
-          <label class="swatch sw-royal"><input type="radio" name="color" value="Royal blue" /><span>Royal blue</span></label>
-          <label class="swatch sw-sky"><input type="radio" name="color" value="Sky blue" /><span>Sky blue</span></label>
-          <label class="swatch sw-teal"><input type="radio" name="color" value="Blue-teal" /><span>Blue-teal</span></label>
-          <label class="swatch sw-steel"><input type="radio" name="color" value="Steel blue-gray" /><span>Steel blue-gray</span></label>
-          <label class="swatch sw-unsure"><input type="radio" name="color" value="Not sure — pick for me" /><span>Not sure</span></label>
+          <label class="swatch sw-navy"><input type="checkbox" name="colors" value="Deep navy" /><span>Deep navy</span></label>
+          <label class="swatch sw-royal"><input type="checkbox" name="colors" value="Royal blue" /><span>Royal blue</span></label>
+          <label class="swatch sw-sky"><input type="checkbox" name="colors" value="Sky blue" /><span>Sky blue</span></label>
+          <label class="swatch sw-teal"><input type="checkbox" name="colors" value="Teal" /><span>Teal</span></label>
+          <label class="swatch sw-emerald"><input type="checkbox" name="colors" value="Emerald green" /><span>Emerald</span></label>
+          <label class="swatch sw-forest"><input type="checkbox" name="colors" value="Forest green" /><span>Forest</span></label>
+          <label class="swatch sw-lime"><input type="checkbox" name="colors" value="Lime / chartreuse" /><span>Lime</span></label>
+          <label class="swatch sw-gold"><input type="checkbox" name="colors" value="Gold / amber" /><span>Gold</span></label>
+          <label class="swatch sw-orange"><input type="checkbox" name="colors" value="Orange" /><span>Orange</span></label>
+          <label class="swatch sw-red"><input type="checkbox" name="colors" value="Red" /><span>Red</span></label>
+          <label class="swatch sw-pink"><input type="checkbox" name="colors" value="Pink / magenta" /><span>Pink</span></label>
+          <label class="swatch sw-purple"><input type="checkbox" name="colors" value="Purple" /><span>Purple</span></label>
+          <label class="swatch sw-slate"><input type="checkbox" name="colors" value="Slate gray" /><span>Slate</span></label>
+          <label class="swatch sw-charcoal"><input type="checkbox" name="colors" value="Charcoal / black" /><span>Charcoal</span></label>
+          <label class="swatch sw-unsure"><input type="checkbox" name="colors" value="Not sure — pick for me" /><span>Not sure</span></label>
         </div>
-        <input type="text" name="color_notes" placeholder="Any color notes? A logo color to match, a competitor site you like, etc." />
+        <input type="text" name="color_notes" placeholder="Any color notes? A logo color to match, a brand color you love, a site you like…" />
+      </div>
+      <div class="field">
+        <label>Overall theme / mood</label>
+        <p class="hint">What overall vibe should the site give off?</p>
+        <div class="choices">
+          <label class="choice"><input type="radio" name="theme" value="Light & clean" />
+            <div class="box"><div class="name">Light &amp; clean</div><div class="demo demo-light">Aa</div><div class="desc">Bright, airy, lots of space</div></div>
+          </label>
+          <label class="choice"><input type="radio" name="theme" value="Dark & bold" />
+            <div class="box"><div class="name">Dark &amp; bold</div><div class="demo demo-dark">Aa</div><div class="desc">Dramatic, premium, high-contrast</div></div>
+          </label>
+          <label class="choice"><input type="radio" name="theme" value="Minimal" />
+            <div class="box"><div class="name">Minimal</div><div class="demo demo-sans">Aa</div><div class="desc">Stripped back, no clutter</div></div>
+          </label>
+          <label class="choice"><input type="radio" name="theme" value="Bold & colorful" />
+            <div class="box"><div class="name">Bold &amp; colorful</div><div class="demo demo-colorful">Aa</div><div class="desc">Energetic, vivid, stands out</div></div>
+          </label>
+          <label class="choice"><input type="radio" name="theme" value="Elegant / premium" />
+            <div class="box"><div class="name">Elegant</div><div class="demo demo-serif">Aa</div><div class="desc">Refined, high-end, classic</div></div>
+          </label>
+          <label class="choice"><input type="radio" name="theme" value="Playful / friendly" />
+            <div class="box"><div class="name">Playful</div><div class="demo demo-rounded">Aa</div><div class="desc">Warm, approachable, fun</div></div>
+          </label>
+        </div>
       </div>
       <div class="field">
         <label>Font personality</label>
         <p class="hint">Which header style feels like your business?</p>
         <div class="choices">
           <label class="choice"><input type="radio" name="font_style" value="Elegant serif" />
-            <div class="box"><div class="name">Elegant</div><div class="demo demo-serif">Estevane HVAC</div><div class="desc">Classic, established, trustworthy</div></div>
+            <div class="box"><div class="name">Elegant</div><div class="demo demo-serif">Your Brand</div><div class="desc">Classic, established, trustworthy</div></div>
           </label>
-          <label class="choice"><input type="radio" name="font_style" value="Clean modern sans" checked />
-            <div class="box"><div class="name">Modern</div><div class="demo demo-sans">Estevane HVAC</div><div class="desc">Clean, current, easy to read</div></div>
+          <label class="choice"><input type="radio" name="font_style" value="Clean modern sans" />
+            <div class="box"><div class="name">Modern</div><div class="demo demo-sans">Your Brand</div><div class="desc">Clean, current, easy to read</div></div>
           </label>
           <label class="choice"><input type="radio" name="font_style" value="Traditional" />
-            <div class="box"><div class="name">Traditional</div><div class="demo demo-classic">Estevane HVAC</div><div class="desc">Familiar, dependable, no-frills</div></div>
+            <div class="box"><div class="name">Traditional</div><div class="demo demo-classic">Your Brand</div><div class="desc">Familiar, dependable, no-frills</div></div>
           </label>
           <label class="choice"><input type="radio" name="font_style" value="Light & airy" />
-            <div class="box"><div class="name">Light</div><div class="demo demo-modern">Estevane HVAC</div><div class="desc">Simple, spacious, understated</div></div>
+            <div class="box"><div class="name">Light</div><div class="demo demo-modern">Your Brand</div><div class="desc">Simple, spacious, understated</div></div>
+          </label>
+          <label class="choice"><input type="radio" name="font_style" value="Bold display" />
+            <div class="box"><div class="name">Bold</div><div class="demo demo-bold">Your Brand</div><div class="desc">Strong, confident, high-impact</div></div>
+          </label>
+          <label class="choice"><input type="radio" name="font_style" value="Friendly rounded" />
+            <div class="box"><div class="name">Friendly</div><div class="demo demo-rounded">Your Brand</div><div class="desc">Soft, rounded, approachable</div></div>
           </label>
         </div>
       </div>
@@ -302,14 +356,14 @@ body::before{background-image:
       <div class="field">
         <label>Which sections do you want? <span class="opt">— check all that apply</span></label>
         <div class="check-grid">
-          <label class="check"><input type="checkbox" name="sections" value="Services list" checked /> Services list</label>
-          <label class="check"><input type="checkbox" name="sections" value="About / your story" checked /> About / your story</label>
-          <label class="check"><input type="checkbox" name="sections" value="Customer reviews" checked /> Customer reviews</label>
+          <label class="check"><input type="checkbox" name="sections" value="Services list" /> Services list</label>
+          <label class="check"><input type="checkbox" name="sections" value="About / your story" /> About / your story</label>
+          <label class="check"><input type="checkbox" name="sections" value="Customer reviews" /> Customer reviews</label>
           <label class="check"><input type="checkbox" name="sections" value="Photo gallery" /> Photo gallery</label>
           <label class="check"><input type="checkbox" name="sections" value="Service area map" /> Service area map</label>
           <label class="check"><input type="checkbox" name="sections" value="Financing / specials" /> Financing / specials</label>
           <label class="check"><input type="checkbox" name="sections" value="FAQ" /> FAQ</label>
-          <label class="check"><input type="checkbox" name="sections" value="Contact form" checked /> Contact form</label>
+          <label class="check"><input type="checkbox" name="sections" value="Contact form" /> Contact form</label>
         </div>
       </div>
       <div class="field">
