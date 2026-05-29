@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Website Intake — Local Growth Systems</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,600;12..96,700;12..96,800&family=Inter+Tight:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0a1413; --bg-soft:#0e1c1b; --ink:#f1efe7; --ink-2:#9fb4b1;
+  --line:rgba(241,239,231,.12); --card:#122120; --accent:#2dd4bf; --accent-2:#f0a85a;
+  --accent-soft:rgba(45,212,191,.12); --on-accent:#04201c; --radius:14px; --radius-lg:22px;
+  --shadow:0 1px 2px rgba(0,0,0,.4), 0 10px 34px rgba(0,0,0,.5);
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0; font-family:'Inter Tight',system-ui,sans-serif; font-size:17px;
+  line-height:1.6; color:var(--ink); background:var(--bg); -webkit-font-smoothing:antialiased;
+}
+body::before{
+  content:""; position:fixed; inset:0; pointer-events:none;
+  background-image:
+    radial-gradient(1200px 600px at 90% -10%, rgba(15,93,94,.06), transparent 60%),
+    radial-gradient(900px 500px at -10% 30%, rgba(217,122,58,.05), transparent 60%);
+  z-index:0;
+}
+h1,h2,h3{font-family:'Bricolage Grotesque',sans-serif; font-weight:600; letter-spacing:-.01em; color:var(--ink); margin:0}
+h1{font-size:clamp(2rem,4vw,2.8rem); line-height:1.08; letter-spacing:-.02em}
+h2{font-size:1.4rem; margin-bottom:4px}
+p{margin:0 0 1rem 0; color:var(--ink-2)}
+.wrap{max-width:760px; margin:0 auto; padding:0 24px; position:relative; z-index:1}
+
+/* HEADER */
+.top{padding:40px 0 8px}
+.logo{display:flex; align-items:center; gap:10px; font-family:'Bricolage Grotesque',sans-serif; font-size:1.1rem; font-weight:600; color:var(--ink); margin-bottom:36px}
+.logo-mark{
+  width:30px; height:30px; border-radius:8px;
+  background:linear-gradient(135deg,var(--accent),#1a8585);
+  display:grid; place-items:center; color:var(--on-accent); font-family:'Bricolage Grotesque',sans-serif; font-weight:700; font-size:.95rem;
+  box-shadow:inset 0 -2px 6px rgba(0,0,0,.18),0 1px 2px rgba(0,0,0,.08);
+}
+.eyebrow{
+  display:inline-block; font-size:.78rem; font-weight:600; letter-spacing:.14em;
+  text-transform:uppercase; color:var(--accent); padding:6px 12px;
+  background:var(--accent-soft); border-radius:999px; margin-bottom:18px;
+}
+.lede{font-size:1.1rem; max-width:560px; margin:18px 0 0}
+.progress-note{
+  display:flex; align-items:center; gap:10px; margin-top:24px;
+  font-size:.9rem; color:var(--ink-2);
+}
+.progress-note .dot{width:8px; height:8px; border-radius:50%; background:var(--accent)}
+
+/* FORM */
+form{margin:36px 0 80px}
+.card{
+  background:var(--card); border:1px solid var(--line); border-radius:var(--radius-lg);
+  padding:36px; margin-bottom:24px; box-shadow:var(--shadow);
+}
+.card-head{display:flex; align-items:baseline; gap:14px; margin-bottom:24px; padding-bottom:18px; border-bottom:1px solid var(--line)}
+.card-num{
+  font-family:'Bricolage Grotesque',sans-serif; font-weight:700; font-size:1.6rem; color:var(--accent); line-height:1; flex-shrink:0;
+}
+.card-head .sub{font-size:.9rem; color:var(--ink-2); margin:4px 0 0}
+.field{margin-bottom:22px}
+.field:last-child{margin-bottom:0}
+label{display:block; font-size:.92rem; font-weight:600; color:var(--ink); margin-bottom:8px}
+label .opt{font-weight:400; color:var(--ink-2); font-size:.82rem}
+.hint{font-size:.82rem; color:var(--ink-2); margin:0 0 8px}
+input[type=text], input[type=email], input[type=tel], input[type=url], select, textarea{
+  width:100%; padding:12px 14px; border:1px solid var(--line); border-radius:10px;
+  font-family:inherit; font-size:.95rem; background:var(--bg); color:var(--ink);
+  transition:border-color .2s, box-shadow .2s;
+}
+input:focus, select:focus, textarea:focus{
+  outline:0; border-color:var(--accent); box-shadow:0 0 0 3px var(--accent-soft);
+}
+textarea{resize:vertical; min-height:90px}
+.row{display:grid; grid-template-columns:1fr 1fr; gap:16px}
+
+/* color swatches */
+.swatches{display:flex; flex-wrap:wrap; gap:10px; margin-bottom:12px}
+.swatch{
+  position:relative; cursor:pointer;
+}
+.swatch input{position:absolute; opacity:0; inset:0; cursor:pointer}
+.swatch span{
+  display:flex; align-items:center; gap:8px;
+  padding:8px 14px 8px 10px; border:1.5px solid var(--line); border-radius:999px;
+  font-size:.85rem; color:var(--ink); transition:border-color .2s, background .2s;
+}
+.swatch span::before{content:""; width:18px; height:18px; border-radius:50%; box-shadow:inset 0 0 0 1px rgba(0,0,0,.1)}
+.swatch input:checked + span{border-color:var(--accent); background:var(--accent-soft)}
+.sw-navy span::before{background:#1e3a5f}
+.sw-royal span::before{background:#2563c9}
+.sw-sky span::before{background:#5aa9e6}
+.sw-teal span::before{background:#0f7d8e}
+.sw-steel span::before{background:#5b7186}
+.sw-unsure span::before{background:linear-gradient(135deg,#1e3a5f,#5aa9e6)}
+
+/* font choices */
+.choices{display:grid; grid-template-columns:1fr 1fr; gap:12px}
+.choice{cursor:pointer; position:relative}
+.choice input{position:absolute; opacity:0; inset:0; cursor:pointer}
+.choice .box{
+  border:1.5px solid var(--line); border-radius:12px; padding:16px; transition:border-color .2s, background .2s; height:100%;
+}
+.choice input:checked + .box{border-color:var(--accent); background:var(--accent-soft)}
+.choice .box .name{font-size:.82rem; font-weight:600; color:var(--accent); text-transform:uppercase; letter-spacing:.06em; margin-bottom:8px}
+.choice .box .demo{font-size:1.5rem; color:var(--ink); line-height:1.1; margin-bottom:4px}
+.choice .box .desc{font-size:.8rem; color:var(--ink-2)}
+.demo-serif{font-family:'Fraunces',serif; font-weight:500}
+.demo-sans{font-family:'Inter Tight',sans-serif; font-weight:600}
+.demo-classic{font-family:Georgia,serif}
+.demo-modern{font-family:'Inter Tight',sans-serif; font-weight:400; letter-spacing:.01em}
+
+/* checkboxes */
+.check-grid{display:grid; grid-template-columns:1fr 1fr; gap:10px}
+.check{display:flex; align-items:center; gap:10px; padding:10px 14px; border:1px solid var(--line); border-radius:10px; cursor:pointer; transition:border-color .2s, background .2s; font-size:.9rem}
+.check:hover{border-color:var(--accent)}
+.check input{width:18px; height:18px; accent-color:var(--accent); flex-shrink:0}
+.check.on{border-color:var(--accent); background:var(--accent-soft)}
+
+.btn{
+  display:inline-flex; align-items:center; justify-content:center; gap:8px; width:100%;
+  padding:15px 24px; border-radius:999px; font-weight:600; font-size:1.05rem;
+  cursor:pointer; border:0; font-family:inherit; background:var(--accent); color:#fff;
+  box-shadow:0 6px 18px rgba(15,93,94,.25); transition:transform .15s, box-shadow .2s;
+}
+.btn:hover{transform:translateY(-2px); box-shadow:0 10px 26px rgba(15,93,94,.35)}
+.foot-note{text-align:center; font-size:.85rem; color:var(--ink-2); margin-top:16px}
+
+.success{
+  display:none; text-align:center; background:var(--card); border:1px solid var(--line);
+  border-radius:var(--radius-lg); padding:56px 40px; box-shadow:var(--shadow);
+}
+.success.show{display:block}
+.success .ico{width:64px; height:64px; border-radius:50%; background:var(--accent-soft); color:var(--accent); display:grid; place-items:center; font-size:2rem; margin:0 auto 20px}
+.success h2{font-size:1.8rem; margin-bottom:8px}
+
+@media(max-width:600px){
+  .row,.choices,.check-grid{grid-template-columns:1fr}
+  .card{padding:24px}
+}
+
+/* Dark theme overrides + scroll motion (added) */
+body::before{background-image:
+  radial-gradient(1200px 600px at 90% -10%, rgba(45,212,191,.10), transparent 60%),
+  radial-gradient(900px 500px at -10% 30%, rgba(240,168,90,.07), transparent 60%)}
+.btn{color:var(--on-accent); box-shadow:0 6px 18px rgba(45,212,191,.25)}
+.btn:hover{box-shadow:0 10px 26px rgba(45,212,191,.38)}
+.scroll-progress{position:fixed; top:0; left:0; height:3px; width:0; z-index:100;
+  background:linear-gradient(90deg, var(--accent), var(--accent-2));
+  box-shadow:0 0 12px rgba(45,212,191,.5)}
+.reveal{opacity:0; transform:translateY(28px); transition:opacity .7s cubic-bezier(.22,1,.36,1), transform .7s cubic-bezier(.22,1,.36,1)}
+.reveal.in{opacity:1; transform:none}
+@media (prefers-reduced-motion: reduce){
+  .reveal{opacity:1 !important; transform:none !important}
+  .scroll-progress{display:none}
+}
+</style>
+</head>
+<body>
+<div class="scroll-progress" id="scrollProgress" aria-hidden="true"></div>
+
+<div class="wrap">
+  <div class="top">
+    <div class="logo"><span class="logo-mark">L</span>Local Growth Systems</div>
+    <span class="eyebrow">Website Intake</span>
+    <h1>Let's get the details right.</h1>
+    <p class="lede">This takes about 5 minutes. The more specific you are, the closer the first draft will be to what you're picturing — so don't hold back.</p>
+    <div class="progress-note"><span class="dot"></span> Your answers come straight to Logan. Nothing here is final — we'll refine it together.</div>
+  </div>
+
+  <form id="intakeForm" action="https://formspree.io/f/mredrowp" method="POST">
+    <input type="hidden" name="_subject" value="New Website Intake — Local Growth Systems" />
+    <input type="hidden" name="form_type" value="Client Intake Form" />
+
+    <!-- 1. Business basics -->
+    <div class="card reveal">
+      <div class="card-head">
+        <span class="card-num">01</span>
+        <div><h2>Your business</h2><p class="sub">So we spell everything right and point people to the right places.</p></div>
+      </div>
+      <div class="row">
+        <div class="field">
+          <label for="contact">Your name</label>
+          <input type="text" id="contact" name="contact_name" required />
+        </div>
+        <div class="field">
+          <label for="business">Business name <span class="opt">— exactly as it should appear</span></label>
+          <input type="text" id="business" name="business_name" placeholder="e.g. Estevane HVAC" required />
+        </div>
+      </div>
+      <div class="row">
+        <div class="field">
+          <label for="email">Email</label>
+          <input type="email" id="email" name="email" required />
+        </div>
+        <div class="field">
+          <label for="phone">Best phone</label>
+          <input type="tel" id="phone" name="phone" />
+        </div>
+      </div>
+      <div class="field">
+        <label for="industry">What does your business do?</label>
+        <input type="text" id="industry" name="industry" placeholder="e.g. Residential & commercial HVAC — install, repair, maintenance" />
+      </div>
+      <div class="field">
+        <label for="tagline">One sentence: what would you tell a stranger about your business? <span class="opt">(optional)</span></label>
+        <input type="text" id="tagline" name="tagline" placeholder="e.g. Family-run HVAC keeping the Treasure Valley comfortable for 12 years." />
+      </div>
+    </div>
+
+    <!-- 2. Service area & contact -->
+    <div class="card reveal">
+      <div class="card-head">
+        <span class="card-num">02</span>
+        <div><h2>Where & how people reach you</h2><p class="sub">This drives your contact section and local SEO basics.</p></div>
+      </div>
+      <div class="field">
+        <label for="area">Service area</label>
+        <p class="hint">Cities, counties, or a radius — wherever you take jobs.</p>
+        <input type="text" id="area" name="service_area" placeholder="e.g. Boise, Meridian, Nampa & surrounding Ada County" />
+      </div>
+      <div class="row">
+        <div class="field">
+          <label for="hours">Business hours <span class="opt">(optional)</span></label>
+          <input type="text" id="hours" name="hours" placeholder="e.g. Mon–Fri 8–5, emergency 24/7" />
+        </div>
+        <div class="field">
+          <label for="address">Physical address <span class="opt">— if you want it shown</span></label>
+          <input type="text" id="address" name="address" placeholder="Leave blank to keep private" />
+        </div>
+      </div>
+      <div class="field">
+        <label>What should the main "call to action" be?</label>
+        <p class="hint">The big button you want visitors to click most.</p>
+        <div class="check-grid">
+          <label class="check"><input type="radio" name="primary_cta" value="Call now" /> Call now</label>
+          <label class="check"><input type="radio" name="primary_cta" value="Request a quote" checked /> Request a quote</label>
+          <label class="check"><input type="radio" name="primary_cta" value="Book an appointment" /> Book an appointment</label>
+          <label class="check"><input type="radio" name="primary_cta" value="Send a message" /> Send a message</label>
+        </div>
+      </div>
+    </div>
+
+    <!-- 3. Look & feel -->
+    <div class="card reveal">
+      <div class="card-head">
+        <span class="card-num">03</span>
+        <div><h2>Look &amp; feel</h2><p class="sub">You mentioned blue and a "pretty font" — let's pin that down.</p></div>
+      </div>
+      <div class="field">
+        <label>Which blue feels closest?</label>
+        <p class="hint">Pick the one that feels right — we can fine-tune the exact shade later.</p>
+        <div class="swatches">
+          <label class="swatch sw-navy"><input type="radio" name="color" value="Deep navy" /><span>Deep navy</span></label>
+          <label class="swatch sw-royal"><input type="radio" name="color" value="Royal blue" /><span>Royal blue</span></label>
+          <label class="swatch sw-sky"><input type="radio" name="color" value="Sky blue" /><span>Sky blue</span></label>
+          <label class="swatch sw-teal"><input type="radio" name="color" value="Blue-teal" /><span>Blue-teal</span></label>
+          <label class="swatch sw-steel"><input type="radio" name="color" value="Steel blue-gray" /><span>Steel blue-gray</span></label>
+          <label class="swatch sw-unsure"><input type="radio" name="color" value="Not sure — pick for me" /><span>Not sure</span></label>
+        </div>
+        <input type="text" name="color_notes" placeholder="Any color notes? A logo color to match, a competitor site you like, etc." />
+      </div>
+      <div class="field">
+        <label>Font personality</label>
+        <p class="hint">Which header style feels like your business?</p>
+        <div class="choices">
+          <label class="choice"><input type="radio" name="font_style" value="Elegant serif" />
+            <div class="box"><div class="name">Elegant</div><div class="demo demo-serif">Estevane HVAC</div><div class="desc">Classic, established, trustworthy</div></div>
+          </label>
+          <label class="choice"><input type="radio" name="font_style" value="Clean modern sans" checked />
+            <div class="box"><div class="name">Modern</div><div class="demo demo-sans">Estevane HVAC</div><div class="desc">Clean, current, easy to read</div></div>
+          </label>
+          <label class="choice"><input type="radio" name="font_style" value="Traditional" />
+            <div class="box"><div class="name">Traditional</div><div class="demo demo-classic">Estevane HVAC</div><div class="desc">Familiar, dependable, no-frills</div></div>
+          </label>
+          <label class="choice"><input type="radio" name="font_style" value="Light & airy" />
+            <div class="box"><div class="name">Light</div><div class="demo demo-modern">Estevane HVAC</div><div class="desc">Simple, spacious, understated</div></div>
+          </label>
+        </div>
+      </div>
+      <div class="field">
+        <label for="vibe">Any websites you like? <span class="opt">(optional)</span></label>
+        <p class="hint">Paste 1–3 links — competitors or any site whose look you admire. Super helpful.</p>
+        <textarea id="vibe" name="reference_sites" placeholder="https://...&#10;What you like about each: ..."></textarea>
+      </div>
+    </div>
+
+    <!-- 4. Pages & content -->
+    <div class="card reveal">
+      <div class="card-head">
+        <span class="card-num">04</span>
+        <div><h2>Pages &amp; content</h2><p class="sub">The Website Launch is a focused single-page site — let's decide what goes on it.</p></div>
+      </div>
+      <div class="field">
+        <label>Which sections do you want? <span class="opt">— check all that apply</span></label>
+        <div class="check-grid">
+          <label class="check"><input type="checkbox" name="sections" value="Services list" checked /> Services list</label>
+          <label class="check"><input type="checkbox" name="sections" value="About / your story" checked /> About / your story</label>
+          <label class="check"><input type="checkbox" name="sections" value="Customer reviews" checked /> Customer reviews</label>
+          <label class="check"><input type="checkbox" name="sections" value="Photo gallery" /> Photo gallery</label>
+          <label class="check"><input type="checkbox" name="sections" value="Service area map" /> Service area map</label>
+          <label class="check"><input type="checkbox" name="sections" value="Financing / specials" /> Financing / specials</label>
+          <label class="check"><input type="checkbox" name="sections" value="FAQ" /> FAQ</label>
+          <label class="check"><input type="checkbox" name="sections" value="Contact form" checked /> Contact form</label>
+        </div>
+      </div>
+      <div class="field">
+        <label for="services">List your main services</label>
+        <p class="hint">Just bullet them out — I'll write the polished copy.</p>
+        <textarea id="services" name="services_list" placeholder="e.g.&#10;- AC install & repair&#10;- Furnace service&#10;- Heat pumps&#10;- Maintenance plans&#10;- Emergency service"></textarea>
+      </div>
+      <div class="field">
+        <label for="differentiator">What makes you different from other local shops?</label>
+        <input type="text" id="differentiator" name="differentiator" placeholder="e.g. Same-day service, licensed & insured, upfront pricing, 12 years local" />
+      </div>
+    </div>
+
+    <!-- 5. Trust assets -->
+    <div class="card reveal">
+      <div class="card-head">
+        <span class="card-num">05</span>
+        <div><h2>Trust signals</h2><p class="sub">The things that make a stranger comfortable calling you.</p></div>
+      </div>
+      <div class="check-grid" style="margin-bottom:22px">
+        <label class="check"><input type="checkbox" name="assets" value="Logo file" /> I have a logo file</label>
+        <label class="check"><input type="checkbox" name="assets" value="Job photos" /> I have job photos</label>
+        <label class="check"><input type="checkbox" name="assets" value="Google reviews" /> I have Google reviews</label>
+        <label class="check"><input type="checkbox" name="assets" value="License/insurance #" /> License / insurance #</label>
+        <label class="check"><input type="checkbox" name="assets" value="Team photo" /> A team or owner photo</label>
+        <label class="check"><input type="checkbox" name="assets" value="Need help with assets" /> I need help getting these</label>
+      </div>
+      <div class="field">
+        <label for="reviews">Paste a couple of your best reviews <span class="opt">(optional)</span></label>
+        <textarea id="reviews" name="reviews" placeholder="Copy/paste from Google, Facebook, etc. — or a link to your reviews."></textarea>
+      </div>
+      <div class="field">
+        <label for="social">Social media / Google Business links <span class="opt">(optional)</span></label>
+        <input type="url" id="social" name="social_links" placeholder="https://..." />
+      </div>
+    </div>
+
+    <!-- 6. Logistics -->
+    <div class="card reveal">
+      <div class="card-head">
+        <span class="card-num">06</span>
+        <div><h2>A few logistics</h2><p class="sub">Last bit — then I get to work.</p></div>
+      </div>
+      <div class="field">
+        <label for="domain">Do you already own a domain name?</label>
+        <input type="text" id="domain" name="domain" placeholder="e.g. estevanehvac.com — or 'no, need one'" />
+      </div>
+      <div class="row">
+        <div class="field">
+          <label for="deadline">Any deadline or event driving this? <span class="opt">(optional)</span></label>
+          <input type="text" id="deadline" name="deadline" placeholder="e.g. before summer AC season" />
+        </div>
+        <div class="field">
+          <label for="package">Package you're after</label>
+          <select id="package" name="package">
+            <option value="Website Launch — $1,000 (founding rate $750)">Website Launch — one-time</option>
+            <option value="Website + Care">Website + Care</option>
+            <option value="Website + Lead System">Website + Lead System</option>
+            <option value="Not sure yet">Not sure yet</option>
+          </select>
+        </div>
+      </div>
+      <div class="field">
+        <label for="anything">Anything else I should know?</label>
+        <textarea id="anything" name="anything_else" placeholder="Worries, must-haves, things you definitely don't want, etc."></textarea>
+      </div>
+    </div>
+
+    <button type="submit" class="btn">Send my intake details →</button>
+    <p class="foot-note">I'll review everything and follow up within one business day.</p>
+  </form>
+
+  <div class="success" id="success">
+    <div class="ico">✓</div>
+    <h2>Got it — thank you!</h2>
+    <p>Your details are on their way to Logan. I'll review everything and reach out within one business day to confirm scope and next steps.</p>
+    <p style="margin:0; font-size:.9rem">— Logan, Local Growth Systems</p>
+  </div>
+</div>
+
+<script>
+// Toggle .on styling for checkboxes/radios
+document.querySelectorAll('.check input').forEach(inp => {
+  const sync = () => {
+    if(inp.type === 'radio'){
+      document.querySelectorAll('input[name="'+inp.name+'"]').forEach(r => r.closest('.check')?.classList.toggle('on', r.checked));
+    } else {
+      inp.closest('.check').classList.toggle('on', inp.checked);
+    }
+  };
+  inp.addEventListener('change', sync); sync();
+});
+
+// AJAX submit to Formspree so we can show inline success
+const form = document.getElementById('intakeForm');
+form.addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const btn = form.querySelector('.btn');
+  btn.textContent = 'Sending…';
+  try{
+    const res = await fetch(form.action, {
+      method:'POST', body:new FormData(form), headers:{'Accept':'application/json'}
+    });
+    if(res.ok){
+      form.style.display='none';
+      document.getElementById('success').classList.add('show');
+      window.scrollTo({top:0, behavior:'smooth'});
+    } else {
+      btn.textContent='Something went wrong — try again';
+    }
+  }catch(err){
+    btn.textContent='Network error — try again';
+  }
+});
+
+// Scroll progress + reveal-on-scroll (added)
+const progressBar = document.getElementById('scrollProgress');
+function updateProgress(){
+  const doc = document.documentElement;
+  const max = doc.scrollHeight - doc.clientHeight;
+  if (progressBar) progressBar.style.width = (max > 0 ? (window.scrollY / max) * 100 : 0) + '%';
+}
+window.addEventListener('scroll', updateProgress, { passive: true });
+updateProgress();
+const io = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if (e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
+}, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+document.querySelectorAll('.reveal').forEach((el, i) => { if (i>0) el.style.transitionDelay=(i*60)+'ms'; io.observe(el); });
+</script>
+
+</body>
+</html>
