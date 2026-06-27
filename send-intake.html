@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Send Intake Form — Local Growth Systems</title>
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=Inter+Tight:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0a1413; --ink:#f1efe7; --ink-2:#9fb4b1;
+  --line:rgba(241,239,231,.12); --card:#122120;
+  --accent:#2dd4bf; --accent-2:#f0a85a;
+  --accent-soft:rgba(45,212,191,.12); --on-accent:#04201c;
+  --radius:14px; --radius-lg:22px;
+  --shadow:0 1px 2px rgba(0,0,0,.4), 0 10px 34px rgba(0,0,0,.5);
+  color-scheme:dark;
+}
+*{box-sizing:border-box; margin:0; padding:0}
+html,body{height:100%; overflow-x:clip; -webkit-text-size-adjust:100%}
+body{
+  font-family:'Inter Tight',system-ui,sans-serif; font-size:17px;
+  line-height:1.6; color:var(--ink); background:var(--bg);
+  -webkit-font-smoothing:antialiased; display:flex; align-items:center; justify-content:center;
+  min-height:100vh; padding:24px;
+}
+body::before{
+  content:""; position:fixed; inset:0; pointer-events:none;
+  background-image:
+    radial-gradient(1000px 500px at 90% -10%, rgba(45,212,191,.09), transparent 60%),
+    radial-gradient(800px 400px at -10% 80%, rgba(240,168,90,.07), transparent 60%);
+  z-index:0;
+}
+h1,h2{font-family:'Bricolage Grotesque',sans-serif; font-weight:700; color:var(--ink); letter-spacing:-.015em}
+
+.card{
+  background:var(--card); border:1px solid var(--line); border-radius:var(--radius-lg);
+  padding:44px 40px; width:100%; max-width:480px; box-shadow:var(--shadow);
+  position:relative; z-index:1;
+}
+
+/* logo / brand */
+.brand{display:flex; align-items:center; gap:10px; margin-bottom:32px}
+.logo-mark{
+  width:30px; height:30px; border-radius:8px; flex-shrink:0;
+  background:linear-gradient(135deg,var(--accent),#1a8585);
+  display:grid; place-items:center; color:var(--on-accent);
+  font-family:'Bricolage Grotesque',sans-serif; font-weight:700; font-size:.95rem;
+}
+.brand-name{font-family:'Bricolage Grotesque',sans-serif; font-weight:500; font-size:1rem; color:var(--ink)}
+
+/* message preview */
+.eyebrow{
+  font-size:.72rem; font-weight:600; letter-spacing:.12em; text-transform:uppercase;
+  color:var(--accent); margin-bottom:10px;
+}
+h1{font-size:1.5rem; margin-bottom:6px}
+.sub{font-size:.95rem; color:var(--ink-2); margin-bottom:28px}
+
+.msg-preview{
+  background:var(--bg); border:1px solid var(--line); border-radius:12px;
+  padding:16px; margin-bottom:24px; font-size:.9rem; color:var(--ink-2); line-height:1.6;
+  position:relative;
+}
+.msg-preview .bubble{
+  background:#1c2e2c; border-radius:18px 18px 18px 4px;
+  padding:12px 16px; display:inline-block; max-width:100%; color:var(--ink);
+  font-size:.9rem; line-height:1.55; word-break:break-word;
+}
+.msg-preview .bubble a{color:var(--accent); text-decoration:none}
+
+/* phone input */
+.field{margin-bottom:16px}
+label{display:block; font-size:.85rem; font-weight:600; color:var(--ink); margin-bottom:7px}
+.input-row{display:flex; gap:10px}
+input[type=tel]{
+  flex:1; padding:12px 14px; border:1px solid var(--line); border-radius:10px;
+  font-family:inherit; font-size:1rem; background:var(--bg); color:var(--ink);
+  transition:border-color .2s, box-shadow .2s; min-height:48px;
+}
+input[type=tel]::placeholder{color:var(--ink-2)}
+input[type=tel]:focus{outline:0; border-color:var(--accent); box-shadow:0 0 0 3px var(--accent-soft)}
+
+/* buttons */
+.btn{
+  display:inline-flex; align-items:center; justify-content:center; gap:8px;
+  padding:13px 20px; border-radius:999px; font-weight:600; font-size:.95rem;
+  cursor:pointer; border:0; font-family:inherit; min-height:48px;
+  transition:transform .15s, box-shadow .2s; flex-shrink:0;
+}
+.btn-primary{
+  background:var(--accent); color:var(--on-accent);
+  box-shadow:0 6px 18px rgba(45,212,191,.25);
+}
+.btn-primary:hover{transform:translateY(-2px); box-shadow:0 10px 26px rgba(45,212,191,.35)}
+.btn-primary:active{transform:none}
+.btn-full{width:100%; margin-bottom:10px}
+
+.divider{display:flex; align-items:center; gap:12px; margin:20px 0; color:var(--ink-2); font-size:.8rem}
+.divider::before,.divider::after{content:""; flex:1; height:1px; background:var(--line)}
+
+/* secondary actions */
+.actions-row{display:flex; gap:10px}
+.btn-ghost{
+  flex:1; background:transparent; color:var(--ink-2); border:1px solid var(--line);
+  font-size:.88rem;
+}
+.btn-ghost:hover{border-color:var(--accent); color:var(--ink); transform:none}
+
+/* copy toast */
+.toast{
+  position:fixed; bottom:24px; left:50%; transform:translateX(-50%) translateY(80px);
+  background:var(--accent); color:var(--on-accent); padding:10px 20px;
+  border-radius:999px; font-size:.88rem; font-weight:600;
+  transition:transform .3s cubic-bezier(.22,1,.36,1), opacity .3s;
+  opacity:0; pointer-events:none; z-index:100; white-space:nowrap;
+}
+.toast.show{transform:translateX(-50%) translateY(0); opacity:1}
+
+/* link line */
+.link-row{
+  display:flex; align-items:center; gap:10px; background:var(--bg);
+  border:1px solid var(--line); border-radius:10px; padding:10px 14px;
+  margin-top:16px; font-size:.82rem; color:var(--ink-2); word-break:break-all;
+}
+.link-row span{flex:1}
+.link-copy{
+  background:none; border:none; cursor:pointer; color:var(--accent); padding:2px 4px;
+  font-size:.78rem; font-weight:600; font-family:inherit; white-space:nowrap;
+  transition:opacity .15s;
+}
+.link-copy:hover{opacity:.75}
+
+@media(max-width:480px){
+  .card{padding:28px 22px}
+  .actions-row{flex-direction:column}
+}
+</style>
+</head>
+<body>
+
+<div class="card">
+  <div class="brand">
+    <a href="index.html" style="display:flex;align-items:center;gap:10px;text-decoration:none">
+      <span class="logo-mark">L</span>
+      <span class="brand-name">Local Growth Systems</span>
+    </a>
+  </div>
+
+  <p class="eyebrow">Client Intake</p>
+  <h1>Send the intake form</h1>
+  <p class="sub">Drop in the client's number and tap Send — opens your Messages app ready to go.</p>
+
+  <!-- message preview -->
+  <div class="msg-preview">
+    <div class="bubble" id="msgBubble">
+      Hey! Here's a quick intake form so I can get started on your website. Takes about 5 minutes:
+      <br><br>
+      <a href="#">https://localgrowthsystems.com/intakeform.html</a>
+      <br><br>
+      — Logan
+    </div>
+  </div>
+
+  <!-- phone + send -->
+  <div class="field">
+    <label for="phoneNum">Client's phone number</label>
+    <div class="input-row">
+      <input type="tel" id="phoneNum" placeholder="(555) 000-0000" autocomplete="tel" />
+      <button class="btn btn-primary" id="sendBtn" onclick="sendSMS()">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+        Send
+      </button>
+    </div>
+  </div>
+
+  <div class="divider">or</div>
+
+  <div class="actions-row">
+    <button class="btn btn-ghost" onclick="copyLink()">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+      Copy link
+    </button>
+    <button class="btn btn-ghost" onclick="copyMsg()">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+      Copy message
+    </button>
+  </div>
+
+  <div class="link-row">
+    <span id="linkDisplay">https://localgrowthsystems.com/intakeform.html</span>
+    <button class="link-copy" onclick="copyLink()">Copy</button>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+const FORM_URL = 'https://localgrowthsystems.com/intakeform.html';
+const SMS_BODY = `Hey! Here's a quick intake form so I can get started on your website. Takes about 5 minutes:\n\n${FORM_URL}\n\n— Logan`;
+
+function sendSMS() {
+  const raw = document.getElementById('phoneNum').value.replace(/\D/g, '');
+  const href = raw
+    ? `sms:${raw}?&body=${encodeURIComponent(SMS_BODY)}`
+    : `sms:?&body=${encodeURIComponent(SMS_BODY)}`;
+  window.location.href = href;
+}
+
+function toast(msg) {
+  const el = document.getElementById('toast');
+  el.textContent = msg;
+  el.classList.add('show');
+  setTimeout(() => el.classList.remove('show'), 2200);
+}
+
+function copyLink() {
+  navigator.clipboard.writeText(FORM_URL).then(() => toast('Link copied!')).catch(() => {
+    const ta = document.createElement('textarea');
+    ta.value = FORM_URL; document.body.appendChild(ta); ta.select(); document.execCommand('copy'); document.body.removeChild(ta);
+    toast('Link copied!');
+  });
+}
+
+function copyMsg() {
+  navigator.clipboard.writeText(SMS_BODY).then(() => toast('Message copied!')).catch(() => {
+    const ta = document.createElement('textarea');
+    ta.value = SMS_BODY; document.body.appendChild(ta); ta.select(); document.execCommand('copy'); document.body.removeChild(ta);
+    toast('Message copied!');
+  });
+}
+
+// format phone as you type
+document.getElementById('phoneNum').addEventListener('input', function() {
+  const digits = this.value.replace(/\D/g, '').slice(0, 10);
+  let fmt = digits;
+  if (digits.length > 6) fmt = `(${digits.slice(0,3)}) ${digits.slice(3,6)}-${digits.slice(6)}`;
+  else if (digits.length > 3) fmt = `(${digits.slice(0,3)}) ${digits.slice(3)}`;
+  else if (digits.length > 0) fmt = `(${digits}`;
+  this.value = fmt;
+});
+
+// also allow Enter to send
+document.getElementById('phoneNum').addEventListener('keydown', e => {
+  if (e.key === 'Enter') sendSMS();
+});
+</script>
+</body>
+</html>
