@@ -173,6 +173,35 @@ body::before{background-image:
   radial-gradient(900px 500px at -10% 30%, rgba(240,168,90,.07), transparent 60%)}
 .btn{color:var(--on-accent); box-shadow:0 6px 18px rgba(45,212,191,.25)}
 .btn:hover{box-shadow:0 10px 26px rgba(45,212,191,.38)}
+/* ===== Logo Drop Zone ===== */
+.drop-zone{
+  border:2px dashed var(--line); border-radius:var(--radius); padding:36px 24px;
+  text-align:center; cursor:pointer; transition:border-color .2s, background .2s;
+  background:rgba(255,255,255,.02); position:relative;
+}
+.drop-zone:hover,.drop-zone.drag-over{border-color:var(--accent); background:var(--accent-soft)}
+.drop-zone input[type=file]{position:absolute; inset:0; opacity:0; cursor:pointer; width:100%; height:100%}
+.drop-icon{
+  width:48px; height:48px; border-radius:50%; background:var(--accent-soft);
+  display:grid; place-items:center; margin:0 auto 14px;
+}
+.drop-icon svg{width:22px; height:22px; stroke:var(--accent); fill:none; stroke-width:2; stroke-linecap:round; stroke-linejoin:round}
+.drop-label{font-size:.95rem; color:var(--ink); margin-bottom:4px}
+.drop-label strong{color:var(--accent)}
+.drop-hint{font-size:.8rem; color:var(--ink-2)}
+.drop-preview{
+  display:none; align-items:center; gap:14px; margin-top:16px;
+  padding:12px 14px; background:var(--bg); border:1px solid var(--line); border-radius:10px;
+}
+.drop-preview.show{display:flex}
+.drop-preview img{width:48px; height:48px; object-fit:contain; border-radius:6px; background:#fff; padding:4px}
+.drop-preview .preview-name{font-size:.88rem; color:var(--ink); flex:1; text-align:left; word-break:break-all}
+.drop-preview .preview-remove{
+  background:none; border:none; color:var(--ink-2); cursor:pointer; font-size:1.2rem; line-height:1;
+  padding:4px 6px; border-radius:6px; transition:color .15s;
+}
+.drop-preview .preview-remove:hover{color:var(--accent)}
+
 .scroll-progress{position:fixed; top:0; left:0; height:3px; width:0; z-index:100;
   background:linear-gradient(90deg, var(--accent), var(--accent-2));
   box-shadow:0 0 12px rgba(45,212,191,.5)}
@@ -210,7 +239,7 @@ html{-webkit-text-size-adjust:100%}
     <div class="progress-note"><span class="dot"></span> Your answers come straight to Logan. Nothing here is final — we'll refine it together.</div>
   </div>
 
-  <form id="intakeForm" action="https://formspree.io/f/mredrowp" method="POST">
+  <form id="intakeForm" action="https://formspree.io/f/mredrowp" method="POST" enctype="multipart/form-data">
     <input type="hidden" name="_subject" value="New Website Intake — Local Growth Systems" />
     <input type="hidden" name="form_type" value="Client Intake Form" />
     <input type="hidden" name="recipient_note" value="Send this client intake submission to logan@localgrowthsystemsapp.com" />
@@ -388,8 +417,24 @@ html{-webkit-text-size-adjust:100%}
         <span class="card-num">05</span>
         <div><h2>Trust signals</h2><p class="sub">The things that make a stranger comfortable calling you.</p></div>
       </div>
+      <div class="field">
+        <label>Upload your logo <span class="opt">(optional)</span></label>
+        <p class="hint">PNG, JPG, SVG, or PDF — drop it here or click to browse.</p>
+        <div class="drop-zone" id="dropZone">
+          <input type="file" id="logoFile" name="logo" accept="image/png,image/jpeg,image/svg+xml,image/webp,application/pdf" />
+          <div class="drop-icon">
+            <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+          </div>
+          <p class="drop-label"><strong>Drop your logo here</strong> or click to browse</p>
+          <p class="drop-hint">PNG, JPG, SVG, or PDF &nbsp;·&nbsp; max 10 MB</p>
+        </div>
+        <div class="drop-preview" id="dropPreview">
+          <img id="previewImg" src="" alt="Logo preview" />
+          <span class="preview-name" id="previewName"></span>
+          <button type="button" class="preview-remove" id="previewRemove" aria-label="Remove logo">&#x2715;</button>
+        </div>
+      </div>
       <div class="check-grid" style="margin-bottom:22px">
-        <label class="check"><input type="checkbox" name="assets" value="Logo file" /> I have a logo file</label>
         <label class="check"><input type="checkbox" name="assets" value="Job photos" /> I have job photos</label>
         <label class="check"><input type="checkbox" name="assets" value="Google reviews" /> I have Google reviews</label>
         <label class="check"><input type="checkbox" name="assets" value="License/insurance #" /> License / insurance #</label>
@@ -483,6 +528,57 @@ form.addEventListener('submit', async (e) => {
     btn.textContent='Network error — try again';
   }
 });
+
+// ===== Logo drag-and-drop =====
+(function(){
+  const zone = document.getElementById('dropZone');
+  const fileInput = document.getElementById('logoFile');
+  const preview = document.getElementById('dropPreview');
+  const previewImg = document.getElementById('previewImg');
+  const previewName = document.getElementById('previewName');
+  const removeBtn = document.getElementById('previewRemove');
+  if (!zone) return;
+
+  function showPreview(file) {
+    previewName.textContent = file.name;
+    if (file.type.startsWith('image/')) {
+      const reader = new FileReader();
+      reader.onload = e => { previewImg.src = e.target.result; previewImg.style.display = 'block'; };
+      reader.readAsDataURL(file);
+    } else {
+      previewImg.style.display = 'none';
+    }
+    preview.classList.add('show');
+  }
+
+  function clearPreview() {
+    preview.classList.remove('show');
+    previewImg.src = '';
+    previewName.textContent = '';
+    fileInput.value = '';
+  }
+
+  fileInput.addEventListener('change', () => {
+    if (fileInput.files[0]) showPreview(fileInput.files[0]);
+  });
+
+  removeBtn.addEventListener('click', clearPreview);
+
+  ['dragenter','dragover'].forEach(evt => zone.addEventListener(evt, e => {
+    e.preventDefault(); zone.classList.add('drag-over');
+  }));
+  ['dragleave','drop'].forEach(evt => zone.addEventListener(evt, () => zone.classList.remove('drag-over')));
+
+  zone.addEventListener('drop', e => {
+    e.preventDefault();
+    const file = e.dataTransfer?.files?.[0];
+    if (!file) return;
+    const dt = new DataTransfer();
+    dt.items.add(file);
+    fileInput.files = dt.files;
+    showPreview(file);
+  });
+})();
 
 // Scroll progress + reveal-on-scroll (added)
 const progressBar = document.getElementById('scrollProgress');
